@@ -11,6 +11,8 @@ import {
   Copy,
   Square,
 } from "lucide-react";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
 
 /* ------------------------------------------------------------------ */
 /* helpers                                                             */
@@ -506,10 +508,25 @@ const CSS = `
 .gm-painel{width:312px;flex:0 0 312px;background:var(--gm-ink2);
   border-right:1px solid var(--gm-line);max-height:100vh;overflow-y:auto}
 .gm-cabecalho{padding:18px 18px 14px;border-bottom:1px solid var(--gm-line);
-  display:flex;align-items:center;gap:10px}
+  position:sticky;top:0;background:var(--gm-ink2);z-index:5;
+  display:flex;align-items:center;justify-content:space-between;gap:10px}
+.gm-marca{display:flex;align-items:center;gap:11px;min-width:0}
+.gm-risco{width:1px;align-self:stretch;margin:1px 0;background:var(--gm-line);flex:none}
 .gm-marca-nome{margin:0;font-family:"Host Grotesk",var(--gm-sans);font-size:19px;
-  font-weight:600;letter-spacing:-.005em;line-height:1;color:var(--gm-text)}
-.gm-logo{height:22px;width:auto;color:var(--gm-text);flex:0 0 auto}
+  font-weight:600;letter-spacing:-.005em;text-transform:lowercase;line-height:1;color:var(--gm-text)}
+.gm-logo{height:20px;width:auto;color:var(--gm-text);flex:none;display:block}
+.gm-tema{flex:0 0 auto;width:30px;height:30px;padding:6px;background:var(--gm-ink);
+  border:1px solid var(--gm-line);border-radius:var(--gm-radius);cursor:pointer;color:var(--gm-muted)}
+.gm-tema:hover{background:var(--gm-cyan);border-color:var(--gm-cyan);color:var(--gm-sobre-cyan)}
+.gm-tema:focus-visible{outline:2px solid var(--gm-cyan);outline-offset:1px}
+.gm-tema svg{width:100%;height:100%;display:block;fill:none;stroke:currentColor;stroke-width:1.7}
+
+.gm-rodape{padding:16px 18px;border-top:1px solid var(--gm-line);background:var(--gm-ink2);
+  display:flex;flex-wrap:wrap;gap:8px 16px}
+.gm-rodape a{font-family:var(--gm-mono);font-size:10.5px;letter-spacing:.04em;color:var(--gm-muted);
+  text-decoration:none}
+.gm-rodape a:hover{color:var(--gm-cyan)}
+.gm-rodape a:focus-visible{outline:2px solid var(--gm-cyan);outline-offset:2px}
 
 .gm-secao{padding:16px 18px;border-bottom:1px solid var(--gm-line)}
 .gm-secao-titulo{display:flex;align-items:center;gap:8px;margin:0 0 12px;
@@ -915,19 +932,11 @@ export default function GradientMaker() {
       <style>{CSS}</style>
 
       <aside className="gm-painel">
-        <header className="gm-cabecalho">
-          <svg
-            viewBox="0 0 557.34 334.4"
-            className="gm-logo"
-            fill="currentColor"
-            role="img"
-            aria-label="Guga"
-          >
-            <path d="M557.34,167.21v167.19h-55.74v-111.47h-111.47v1.96c0,60.48-49.03,109.52-109.52,109.52h-1.94v-55.74h.1c30.73,0,55.63-24.91,55.63-55.63v-.1h-55.74v-55.72h55.74V0h55.72v167.21h167.21Z" />
-            <path d="M55.74,167.21h111.46v-55.74h55.74v222.93H0v-55.74h167.19v-55.74H0v-113.41C0,49.03,49.03,0,109.52,0h113.41v55.74h-111.39c-30.82,0-55.8,24.98-55.8,55.8v55.67Z" />
-          </svg>
-          <h1 className="gm-marca-nome">gradient maker</h1>
-        </header>
+        <Header
+          tool="gradient maker"
+          tema={tema}
+          onToggleTema={() => setTema((t) => (t === "escuro" ? "claro" : "escuro"))}
+        />
 
         <Secao titulo="Tipo">
           <div className="gm-controle">
@@ -1120,6 +1129,13 @@ export default function GradientMaker() {
               : "Velocidade em 0: exporte em PNG ou SVG."}
           </p>
         </Secao>
+
+        <Footer
+          links={[
+            { label: "Bento Maker", href: "https://bento-maker-three.vercel.app/" },
+            { label: "gri.d.maker", href: "https://github.com/gugaxd/gri.d.maker" },
+          ]}
+        />
       </aside>
 
       <main className="gm-main">
@@ -1141,13 +1157,6 @@ export default function GradientMaker() {
             >
               {playing ? <Pause size={13} /> : <Play size={13} />}
               {playing ? "pausar" : "reproduzir"}
-            </button>
-            <button
-              type="button"
-              className="gm-botao"
-              onClick={() => setTema((t) => (t === "escuro" ? "claro" : "escuro"))}
-            >
-              {tema === "escuro" ? "claro" : "escuro"}
             </button>
           </span>
         </div>
