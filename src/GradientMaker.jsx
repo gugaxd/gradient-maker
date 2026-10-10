@@ -12,7 +12,9 @@ import {
   Square,
 } from "lucide-react";
 import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
+
+/* Menu do hub de ferramentas (projeto "hub" ao lado). Em dev aponta pro servidor local. */
+const HUB_URL = import.meta.env.DEV ? "http://localhost:5180/" : "https://design-tools-gugaxd.vercel.app/";
 
 /* ------------------------------------------------------------------ */
 /* helpers                                                             */
@@ -510,12 +512,14 @@ const CSS = `
 .gm-cabecalho{padding:18px 18px 14px;border-bottom:1px solid var(--gm-line);
   position:sticky;top:0;background:var(--gm-ink2);z-index:5;
   display:flex;align-items:center;justify-content:space-between;gap:10px}
-.gm-marca{display:flex;align-items:center;gap:11px;min-width:0}
+.gm-marca{display:flex;align-items:center;gap:11px;min-width:0;text-decoration:none}
+a.gm-marca:focus-visible{outline:2px solid var(--gm-cyan);outline-offset:4px}
+.gm-acoes{display:flex;gap:6px;flex:none}
 .gm-risco{width:1px;align-self:stretch;margin:1px 0;background:var(--gm-line);flex:none}
 .gm-marca-nome{margin:0;font-family:"Host Grotesk",var(--gm-sans);font-size:19px;
   font-weight:600;letter-spacing:-.005em;text-transform:lowercase;line-height:1;color:var(--gm-text)}
 .gm-logo{height:20px;width:auto;color:var(--gm-text);flex:none;display:block}
-.gm-tema{flex:0 0 auto;width:30px;height:30px;padding:6px;background:var(--gm-ink);
+.gm-tema{flex:0 0 auto;display:block;width:30px;height:30px;padding:6px;background:var(--gm-ink);
   border:1px solid var(--gm-line);border-radius:var(--gm-radius);cursor:pointer;color:var(--gm-muted)}
 .gm-tema:hover{background:var(--gm-cyan);border-color:var(--gm-cyan);color:var(--gm-sobre-cyan)}
 .gm-tema:focus-visible{outline:2px solid var(--gm-cyan);outline-offset:1px}
@@ -934,6 +938,7 @@ export default function GradientMaker() {
       <aside className="gm-painel">
         <Header
           tool="gradient maker"
+          homeHref={HUB_URL}
           tema={tema}
           onToggleTema={() => setTema((t) => (t === "escuro" ? "claro" : "escuro"))}
         />
@@ -1130,12 +1135,6 @@ export default function GradientMaker() {
           </p>
         </Secao>
 
-        <Footer
-          links={[
-            { label: "Bento Maker", href: "https://bento-maker-three.vercel.app/" },
-            { label: "gri.d.maker", href: "https://github.com/gugaxd/gri.d.maker" },
-          ]}
-        />
       </aside>
 
       <main className="gm-main">

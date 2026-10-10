@@ -1,10 +1,13 @@
 /* Cabeçalho do app: logo do estúdio + nome da ferramenta + alternador de tema.
    Genérico — nome vem por props. Cor sai só das variáveis --gm-* já declaradas
-   no bloco CSS de GradientMaker.jsx, como manda o sistema visual do gri.d.maker. */
-export default function Header({ tool, tema, onToggleTema }) {
+   no bloco CSS de GradientMaker.jsx, como manda o sistema visual do gri.d.maker.
+   Com `homeHref`, a marca vira link e aparece o botão de voltar ao menu do hub. */
+export default function Header({ tool, tema, onToggleTema, homeHref }) {
+  const Marca = homeHref ? "a" : "div";
+  const marcaProps = homeHref ? { href: homeHref, title: "Todas as ferramentas" } : {};
   return (
     <header className="gm-cabecalho">
-      <div className="gm-marca">
+      <Marca className="gm-marca" {...marcaProps}>
         <svg
           className="gm-logo"
           viewBox="0 0 557.34 334.4"
@@ -17,7 +20,18 @@ export default function Header({ tool, tema, onToggleTema }) {
         </svg>
         <span className="gm-risco" />
         <h1 className="gm-marca-nome">{tool}</h1>
-      </div>
+      </Marca>
+      <div className="gm-acoes">
+      {homeHref && (
+        <a className="gm-tema" href={homeHref} aria-label="Voltar ao menu de ferramentas" title="Todas as ferramentas">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3.5" y="3.5" width="7" height="7" />
+          <rect x="13.5" y="3.5" width="7" height="7" />
+          <rect x="3.5" y="13.5" width="7" height="7" />
+          <rect x="13.5" y="13.5" width="7" height="7" />
+        </svg>
+        </a>
+      )}
       <button
         type="button"
         className="gm-tema"
@@ -38,6 +52,7 @@ export default function Header({ tool, tema, onToggleTema }) {
           )}
         </svg>
       </button>
+      </div>
     </header>
   );
 }
